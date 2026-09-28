@@ -8,13 +8,13 @@ export default function NotFound() {
         <SectionHeading
           align="center"
           eyebrow="404"
-          title="That page took a wrong turn."
-          intro="The link may be out of date. Head back home or reserve a ride from here."
+          title="That page did not make the trip."
+          intro="The link may be old or mistyped. Head back home, or get a quote from here."
         />
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <ButtonLink href="/">Back to home</ButtonLink>
+          <ButtonLink href="/">Go home</ButtonLink>
           <ButtonLink href="/book" variant="outline-gold">
-            Reserve a ride
+            Get a quote
           </ButtonLink>
         </div>
       </Container>

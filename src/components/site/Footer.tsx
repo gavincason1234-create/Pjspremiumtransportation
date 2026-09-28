@@ -28,7 +28,7 @@ export function Footer() {
         <div className="sm:col-span-2 lg:col-span-1">
           <Logo size={44} />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
-            {BUSINESS.tagline} Woman-owned and locally operated in {BUSINESS.city}, Texas.
+            {BUSINESS.tagline} Woman-owned and locally operated in {BUSINESS.city}, Texas. Serving Cooke County, Gainesville, the DFW Metroplex and WinStar.
           </p>
           <a
             href={BUSINESS.facebookUrl}
@@ -93,7 +93,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {BUSINESS.name}. All rights reserved.
           </p>
-          <p>Reservations only · Airport · Medical · WinStar · Metroplex</p>
+          <p>Trip tracking is shared by drivers with their consent, only during an active trip.</p>
         </div>
       </div>
     </footer>

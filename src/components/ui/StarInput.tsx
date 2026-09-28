@@ -4,11 +4,11 @@ import { useId, useState } from "react";
 import { cn } from "@/lib/cn";
 
 const LABELS: Record<number, string> = {
-  1: "Poor",
-  2: "Below expectations",
-  3: "Good",
-  4: "Great",
-  5: "Outstanding",
+  1: "Not good",
+  2: "Could be better",
+  3: "Fine",
+  4: "Good",
+  5: "Excellent",
 };
 
 /** Accessible 1–5 star picker (radio group). Submits as a normal form field via `name`. */
@@ -47,7 +47,7 @@ export function StarInput({
                 checked={value === n}
                 onChange={() => setValue(n)}
                 className="sr-only"
-                aria-label={`${n} star${n > 1 ? "s" : ""} – ${LABELS[n]}`}
+                aria-label={`${n} star${n > 1 ? "s" : ""}: ${LABELS[n]}`}
               />
               <svg width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" className="transition-transform duration-150 hover:scale-110">
                 <path

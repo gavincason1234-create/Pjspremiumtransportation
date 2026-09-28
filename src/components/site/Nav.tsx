@@ -58,7 +58,7 @@ export function Nav() {
             {BUSINESS.phone}
           </a>
           <ButtonLink href="/book" size="sm">
-            Reserve a ride
+            Get a quote
           </ButtonLink>
         </div>
 
@@ -100,13 +100,13 @@ export function Nav() {
           ))}
           <div className="mt-6 flex flex-col gap-3" onClick={() => setOpen(false)}>
             <ButtonLink href="/book" size="lg">
-              Reserve a ride
+              Get a quote
             </ButtonLink>
             <ButtonLink href={BUSINESS.phoneHref} variant="outline-gold" size="lg">
               <Phone className="size-4" aria-hidden="true" /> Call {BUSINESS.phone}
             </ButtonLink>
-            <ButtonLink href={BUSINESS.smsHref} variant="ghost" size="lg">
-              Text us
+            <ButtonLink href={BUSINESS.smsQuoteHref} variant="ghost" size="lg">
+              Text Patsy
             </ButtonLink>
           </div>
           <p className="mt-8 text-center text-xs text-ink-500">Woman-owned · Locally operated · Myra, Texas</p>

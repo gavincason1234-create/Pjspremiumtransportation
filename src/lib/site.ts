@@ -13,6 +13,8 @@ export const BUSINESS = {
   phone: "(940) 277-9099",
   phoneHref: "tel:+19402779099",
   smsHref: "sms:+19402779099",
+  /** Opens Messages with a friendly first line already typed. */
+  smsQuoteHref: "sms:+19402779099?&body=" + encodeURIComponent("Hi Patsy, I'd like a quote for a ride on "),
   email: "pjspremiumtransportation@gmail.com",
   facebookUrl: "https://www.facebook.com/profile.php?id=61591566692936",
   tagline: "The driver you know. The service you trust.",

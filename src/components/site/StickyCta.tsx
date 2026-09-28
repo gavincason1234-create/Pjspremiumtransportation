@@ -16,11 +16,11 @@ export function StickyCta() {
         <a href={BUSINESS.phoneHref} className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full border border-gold-500/50 text-sm font-semibold text-gold-300">
           <Phone className="size-4" aria-hidden="true" /> Call
         </a>
-        <a href={BUSINESS.smsHref} className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full border border-white/15 text-sm font-semibold text-cream-100">
+        <a href={BUSINESS.smsQuoteHref} className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full border border-white/15 text-sm font-semibold text-cream-100">
           <MessageSquareText className="size-4" aria-hidden="true" /> Text
         </a>
         <Link href="/book" className="inline-flex h-11 items-center justify-center rounded-full bg-gold-500 text-sm font-semibold text-ink-950">
-          Reserve
+          Get a quote
         </Link>
       </div>
     </div>
