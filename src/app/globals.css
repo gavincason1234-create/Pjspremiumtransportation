@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ design tokens
+   Brand: black + gold (from the PJ's logo), warm cream text. Dark-first, single theme.
+   Colors are exposed to Tailwind via @theme so `bg-ink-900`, `text-gold-500`, etc. work. */
+@theme {
+  --color-ink-950: #08080a;
+  --color-ink-900: #0e0e12;
+  --color-ink-850: #131318;
+  --color-ink-800: #18181f;
+  --color-ink-700: #24242d;
+  --color-ink-600: #34343f;
+  --color-ink-500: #5b5b69;
+  --color-ink-400: #8d8d9b;
+  --color-ink-300: #b6b6c2;
+  --color-ink-200: #d9d9e1;
+
+  --color-cream-50: #fcfaf5;
+  --color-cream-100: #f5f0e4;
+  --color-cream-200: #e9e1cd;
+  --color-cream-300: #d9cdb0;
+
+  --color-gold-200: #f3e4ad;
+  --color-gold-300: #e9d38a;
+  --color-gold-400: #dcbf5f;
+  --color-gold-500: #c9a94a;
+  --color-gold-600: #a98a2f;
+  --color-gold-700: #7d651f;
+
+  --color-success-400: #5fdda3;
+  --color-success-500: #3ecf8e;
+  --color-warning-400: #f7c563;
+  --color-warning-500: #f0ad2e;
+  --color-danger-400: #f47c7c;
+  --color-danger-500: #e8514f;
+
+  --font-display: var(--font-playfair), "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --shadow-glow: 0 0 0 1px rgba(201, 169, 74, 0.25), 0 20px 60px -20px rgba(201, 169, 74, 0.35);
+  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.7);
+}
+
+:root {
+  color-scheme: dark;
+  --background: var(--color-ink-950);
+  --foreground: var(--color-cream-100);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(201, 169, 74, 0.35);
+}
+
+/* Focus ring that works on dark surfaces */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold-400);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* ------------------------------------------------------------------ utilities */
+@utility container-x {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 76rem;
+  padding-inline: 1rem;
+  @media (min-width: 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Subtle gold radial glow used behind hero content */
+@utility bg-hero-glow {
+  background-image:
+    radial-gradient(60% 50% at 20% 10%, rgba(201, 169, 74, 0.16), transparent 60%),
+    radial-gradient(40% 40% at 90% 90%, rgba(201, 169, 74, 0.08), transparent 60%);
+}
+
+/* Thin gold rule */
+@utility hairline-gold {
+  background: linear-gradient(90deg, transparent, var(--color-gold-500), transparent);
+  height: 1px;
+}
+
+/* Hides native number spinners on mobile-friendly inputs */
+@utility no-spinner {
+  -moz-appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* Leaflet needs a real height; the map container sets it. Marker pulse for the live driver dot. */
+@keyframes pj-pulse {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.pj-driver-marker {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+.pj-driver-marker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(201, 169, 74, 0.55);
+  animation: pj-pulse 2s ease-out infinite;
+}
+.pj-driver-marker::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  background: var(--color-gold-400);
+  border: 2px solid var(--color-ink-950);
+  box-shadow: 0 0 0 2px rgba(201, 169, 74, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pj-driver-marker::before { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
