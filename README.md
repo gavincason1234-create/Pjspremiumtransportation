@@ -66,7 +66,8 @@ Tracking is driver-initiated and consent-based, which is what state tracking-dev
 - A driver signs in with their own name and PIN and must tick a consent box for **each trip**.
 - The driver's screen shows a persistent "Sharing your location" indicator and a Stop button.
 - Only the driver's position is shared, only while the trip is active, only to people with the private link (`/track/CODE`).
-- Riders are never tracked. Positions are deleted automatically 24 hours after a trip ends (`vercel.json` cron → `/api/cron/purge-locations`; set `CRON_SECRET` in Vercel to protect it).
+- Riders are never tracked. Only the driver's latest position is stored (no route history), and it is deleted automatically 24 hours after a trip ends (`vercel.json` cron → `/api/cron/purge-locations`; set `CRON_SECRET` in Vercel to protect it).
+- Trip links are sent with `Referrer-Policy: no-referrer` and `noindex`, so they do not leak to other sites or search engines.
 - The privacy notice at `/privacy` describes all of this in plain English.
 
 To try it in demo mode, set `DEMO_SEED=true` in Vercel: a demo driver "Patsy" with PIN `1234` is created when the driver sign-in page is opened. Remove it before real use.

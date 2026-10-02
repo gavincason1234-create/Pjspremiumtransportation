@@ -315,12 +315,12 @@ export function createMemoryDb(): Db {
 
     locations: {
       async append(tripId, points) {
-        const s = store();
-        const list = s.locations.get(tripId) ?? [];
-        list.push(...points);
-        // Keep memory bounded: only the last 2,000 points per trip.
-        if (list.length > 2000) list.splice(0, list.length - 2000);
-        s.locations.set(tripId, list);
+        if (points.length === 0) return;
+        // Data minimization: keep only the driver's most recent position, never a route history.
+        const p = points.reduce((a, b) => (new Date(b.recordedAt) >= new Date(a.recordedAt) ? b : a));
+        store().locations.set(tripId, [
+          { ...p, lat: Math.round(p.lat * 1e5) / 1e5, lng: Math.round(p.lng * 1e5) / 1e5 },
+        ]);
       },
       async latest(tripId) {
         const list = store().locations.get(tripId);

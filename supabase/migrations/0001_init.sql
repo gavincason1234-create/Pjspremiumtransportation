@@ -105,10 +105,11 @@ create table if not exists trips (
 create index if not exists trips_driver_active_idx on trips (driver_id, status);
 create index if not exists trips_started_idx       on trips (started_at desc);
 
--- ---------------------------------------------------------------- trip locations (purged 24h after a trip ends)
+-- ---------------------------------------------------------------- trip locations
+-- Data minimization: ONE row per trip holding only the driver's latest position (no route history).
+-- The row is deleted 24h after the trip ends by the purge-locations cron.
 create table if not exists trip_locations (
-  id           bigserial primary key,
-  trip_id      uuid not null references trips (id) on delete cascade,
+  trip_id      uuid primary key references trips (id) on delete cascade,
   lat          double precision not null,
   lng          double precision not null,
   accuracy_m   real,
@@ -116,7 +117,6 @@ create table if not exists trip_locations (
   speed_mps    real,
   recorded_at  timestamptz not null default now()
 );
-create index if not exists trip_locations_trip_idx on trip_locations (trip_id, recorded_at desc);
 
 -- ---------------------------------------------------------------- lock everything down (server-only access)
 alter table site_settings       enable row level security;

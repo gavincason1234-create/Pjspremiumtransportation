@@ -462,27 +462,24 @@ export function createSupabaseDb(): Db {
     locations: {
       async append(tripId, points) {
         if (points.length === 0) return;
-        const { error } = await sb.from("trip_locations").insert(
-          points.map((p) => ({
+        // Keep only the most recent point (no route history is stored).
+        const p = points.reduce((a, b) => (new Date(b.recordedAt) >= new Date(a.recordedAt) ? b : a));
+        const { error } = await sb.from("trip_locations").upsert(
+          {
             trip_id: tripId,
-            lat: p.lat,
-            lng: p.lng,
-            accuracy_m: p.accuracyM,
-            heading_deg: p.headingDeg,
-            speed_mps: p.speedMps,
+            lat: Math.round(p.lat * 1e5) / 1e5,
+            lng: Math.round(p.lng * 1e5) / 1e5,
+            accuracy_m: p.accuracyM ?? null,
+            heading_deg: p.headingDeg ?? null,
+            speed_mps: p.speedMps ?? null,
             recorded_at: p.recordedAt,
-          })),
+          },
+          { onConflict: "trip_id" },
         );
         if (error) fail("locations.append", error);
       },
       async latest(tripId) {
-        const { data, error } = await sb
-          .from("trip_locations")
-          .select("*")
-          .eq("trip_id", tripId)
-          .order("recorded_at", { ascending: false })
-          .limit(1)
-          .maybeSingle();
+        const { data, error } = await sb.from("trip_locations").select("*").eq("trip_id", tripId).maybeSingle();
         if (error) fail("locations.latest", error);
         return data ? mapLocation(data as Row) : null;
       },

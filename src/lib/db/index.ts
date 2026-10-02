@@ -81,9 +81,10 @@ export interface Db {
   };
 
   locations: {
+    /** Stores ONLY the most recent of `points` for the trip (replacing any previous one). No route history is kept. */
     append(tripId: string, points: TripLocation[]): Promise<void>;
     latest(tripId: string): Promise<TripLocation | null>;
-    /** Deletes location points for trips that ended more than `olderThanHours` ago. Returns rows removed (best effort). */
+    /** Deletes the stored position for trips that ended more than `olderThanHours` ago. Returns rows removed (best effort). */
     purgeExpired(olderThanHours?: number): Promise<number>;
   };
 }

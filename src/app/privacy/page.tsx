@@ -36,7 +36,7 @@ export default function PrivacyPage() {
                 <strong className="text-cream-50">Driver applications.</strong> The details you enter on the Drive with PJ&rsquo;s page (name, phone, optional email, license plate, vehicle, optional experience, city and message), so Patsy can reach you and evaluate a fit. We do not collect date of birth, license numbers, Social Security numbers or documents on this site.
               </li>
               <li>
-                <strong className="text-cream-50">Trip location (drivers only).</strong> A driver&rsquo;s phone location, only after the driver agrees at the start of a trip and only while that trip is active. It is shown on a private link for that trip so the rider and whoever is meeting them can see the car approaching. Location points are deleted automatically within 24 hours after the trip ends. We never collect a rider&rsquo;s location.
+                <strong className="text-cream-50">Trip location (drivers only).</strong> A driver&rsquo;s phone location, only after the driver agrees at the start of a trip and only while that trip is active. It is shown on a private link for that trip so the rider and whoever is meeting them can see the car approaching. We keep only the most recent position, never a route history, and delete it automatically within 24 hours after the trip ends. We never collect a rider&rsquo;s location.
               </li>
               <li>
                 <strong className="text-cream-50">Site basics.</strong> Standard server logs (IP address, browser type, pages requested) kept briefly for security and troubleshooting. Sign-in cookies for the owner and driver areas only.
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-2xl text-cream-50">How long we keep it</h2>
             <ul className="mt-4 space-y-2">
-              <li>Trip location points: deleted within 24 hours after a trip ends.</li>
+              <li>Trip location: only the latest position is kept, and it is deleted within 24 hours after a trip ends.</li>
               <li>Ride requests: about 13 months, then deleted or anonymized. Invoices are kept separately for tax records.</li>
               <li>Driver applications: up to one year after a decision, then deleted.</li>
               <li>Reviews: while published. Hidden reviews are kept for record-keeping and then deleted.</li>
