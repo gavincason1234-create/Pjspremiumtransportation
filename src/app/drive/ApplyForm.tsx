@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState, type ChangeEvent } from "react";
 import { CircleCheck, MessageSquareText, Phone } from "lucide-react";
 import { Alert } from "@/components/ui/Alert";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -52,7 +52,7 @@ export function ApplyForm() {
     target?.focus();
   }, [state]);
 
-  const set = (field: Field) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const set = (field: Field) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const next = e.target.value;
     setValues((v) => ({ ...v, [field]: next }));
   };

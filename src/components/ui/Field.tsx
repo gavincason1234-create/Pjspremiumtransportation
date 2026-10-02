@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode, Ref, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/cn";
 
 const control =
@@ -28,7 +28,7 @@ export function Help({ children }: { children: ReactNode }) {
 
 type Common = { label: ReactNode; hint?: ReactNode; error?: string; help?: ReactNode; wrapperClassName?: string };
 
-export function Input({ id, label, hint, error, help, wrapperClassName, className, ...rest }: InputHTMLAttributes<HTMLInputElement> & Common & { id: string }) {
+export function Input({ id, label, hint, error, help, wrapperClassName, className, ...rest }: InputHTMLAttributes<HTMLInputElement> & Common & { id: string; ref?: Ref<HTMLInputElement> }) {
   return (
     <div className={wrapperClassName}>
       <Label htmlFor={id} hint={hint}>
@@ -41,7 +41,7 @@ export function Input({ id, label, hint, error, help, wrapperClassName, classNam
   );
 }
 
-export function Textarea({ id, label, hint, error, help, wrapperClassName, className, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement> & Common & { id: string }) {
+export function Textarea({ id, label, hint, error, help, wrapperClassName, className, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement> & Common & { id: string; ref?: Ref<HTMLTextAreaElement> }) {
   return (
     <div className={wrapperClassName}>
       <Label htmlFor={id} hint={hint}>
@@ -54,7 +54,7 @@ export function Textarea({ id, label, hint, error, help, wrapperClassName, class
   );
 }
 
-export function Select({ id, label, hint, error, help, wrapperClassName, className, children, ...rest }: SelectHTMLAttributes<HTMLSelectElement> & Common & { id: string }) {
+export function Select({ id, label, hint, error, help, wrapperClassName, className, children, ...rest }: SelectHTMLAttributes<HTMLSelectElement> & Common & { id: string; ref?: Ref<HTMLSelectElement> }) {
   return (
     <div className={wrapperClassName}>
       <Label htmlFor={id} hint={hint}>

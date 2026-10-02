@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { centralLocalToIso } from "@/lib/format";
 
 /**
  * Zod v4 schemas shared by API routes, server actions and client forms.
@@ -35,12 +36,22 @@ export const bookingSchema = z.object({
   serviceType: z.enum(SERVICE_TYPE_VALUES, "Please choose a service."),
   pickupAddress: z.string().trim().min(4, "Where should we pick you up?").max(200),
   dropoffAddress: z.string().trim().min(4, "Where are you headed?").max(200),
-  /** From <input type="datetime-local">: "YYYY-MM-DDTHH:mm" (no timezone) or a full ISO string. */
+  /**
+   * From <input type="datetime-local">: "YYYY-MM-DDTHH:mm" (no timezone) or a full ISO string.
+   * Zone-less values are interpreted as Central Time; the output is always an ISO UTC string.
+   */
   pickupAt: z
     .string()
     .trim()
     .min(1, "When do you need the ride?")
-    .refine((v) => !Number.isNaN(new Date(v).getTime()), "Please pick a valid date and time.")
+    .transform((v, ctx) => {
+      const iso = centralLocalToIso(v);
+      if (!iso) {
+        ctx.addIssue({ code: "custom", message: "Please pick a valid date and time." });
+        return z.NEVER;
+      }
+      return iso;
+    })
     .refine((v) => new Date(v).getTime() > Date.now() - 60 * 60 * 1000, "Please choose a time in the future."),
   passengers: z.coerce.number().int().min(1, "At least one passenger.").max(6, "For groups over 6, please call us."),
   name,
@@ -53,7 +64,10 @@ export type BookingInput = z.infer<typeof bookingSchema>;
 
 export const reviewSchema = z.object({
   name: z.string().trim().min(2, "Please tell us your first name.").max(60),
-  rating: z.coerce.number().int().min(1, "Please choose a star rating.").max(5),
+  rating: z.preprocess(
+    (v) => (v === undefined || v === null || v === "" ? 0 : v),
+    z.coerce.number().int().min(1, "Please choose a star rating.").max(5, "Please choose a star rating."),
+  ),
   comment: z.string().trim().min(10, "Please share a few words about your ride.").max(1200, "Please keep your review under 1,200 characters."),
   serviceType: z.union([z.literal(""), z.enum(SERVICE_TYPE_VALUES)]).transform((v) => (v === "" ? null : v)).nullable().optional(),
   website: honeypot,

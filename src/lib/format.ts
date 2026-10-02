@@ -1,6 +1,43 @@
 /** Formatting helpers. The business operates on Central Time. */
 export const TIME_ZONE = "America/Chicago";
 
+/**
+ * Interprets a zone-less "YYYY-MM-DDTHH:mm" (what <input type="datetime-local"> submits) as Central Time
+ * and returns an ISO UTC string. Strings that already carry a zone (Z or ±HH:MM) are trusted as-is.
+ * Returns null when the input is not a parseable date.
+ */
+export function centralLocalToIso(local: string): string | null {
+  const v = local.trim();
+  if (!v) return null;
+  if (/[zZ]$|[+-]\d{2}:\d{2}$/.test(v)) {
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+  const m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?$/.exec(v);
+  if (!m) {
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+  const [, y, mo, d, h, mi, sec] = m;
+  // Treat the wall-clock time as UTC first, then shift by Central's offset at that instant.
+  const guess = Date.UTC(+y, +mo - 1, +d, +h, +mi, sec ? +sec : 0);
+  if (Number.isNaN(guess)) return null;
+  const fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIME_ZONE,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+  const parts = Object.fromEntries(fmt.formatToParts(new Date(guess)).map((p) => [p.type, p.value]));
+  const asCentral = Date.UTC(+parts.year, +parts.month - 1, +parts.day, +parts.hour % 24, +parts.minute, +parts.second);
+  const offset = asCentral - guess;
+  return new Date(guess - offset).toISOString();
+}
+
 export function formatDateTime(iso: string, opts: { withYear?: boolean } = {}): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;

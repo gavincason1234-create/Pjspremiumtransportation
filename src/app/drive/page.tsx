@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card, CardBody } from "@/components/ui/Card";
-import { Container, Eyebrow, Section, SectionHeading } from "@/components/ui/Section";
+import { Container, Section, SectionHeading } from "@/components/ui/Section";
 import { getGalleryImages } from "@/lib/gallery";
 import { BUSINESS, smsHref } from "@/lib/site";
 import { ApplyForm } from "./ApplyForm";
@@ -137,14 +137,14 @@ export default function DrivePage() {
           </div>
 
           <figure className="lg:col-span-5">
-            <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-3xl border border-ink-700 bg-ink-850 shadow-card lg:ml-auto">
+            <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-3xl border border-ink-700 bg-ink-850 shadow-card lg:mr-0">
               {photo ? (
                 <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 320px, 80vw" className="object-cover" />
               ) : (
                 <Image src="/brand/profile.jpg" alt={`${BUSINESS.name} logo`} fill sizes="320px" className="object-cover" />
               )}
             </div>
-            <figcaption className="mx-auto mt-4 max-w-xs text-center text-sm leading-relaxed text-ink-400 lg:ml-auto lg:mr-0">
+            <figcaption className="mx-auto mt-4 max-w-xs text-center text-sm leading-relaxed text-ink-400 lg:mr-0">
               {BUSINESS.ownerFirstName}, owner-operator. Every driver who joins PJ&rsquo;s is held to the standard she drives by.
             </figcaption>
           </figure>
@@ -183,7 +183,7 @@ export default function DrivePage() {
             <SectionHeading
               eyebrow="Why PJ's"
               title="Why drive with PJ's"
-              intro="Fewer, better rides. Booked ahead, quoted before the rider confirms, and driven for people who asked for you by name."
+              intro="Fewer, better rides. Booked ahead, quoted before the rider confirms, and driven for people who chose PJ's on purpose."
             />
           </div>
           <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
@@ -208,7 +208,7 @@ export default function DrivePage() {
           <SectionHeading eyebrow="After you apply" title="What to expect" intro="Three steps, no forms. Most of it is a conversation." align="center" />
           <ol className="mt-12 grid gap-4 md:grid-cols-3">
             {STEPS.map(({ icon: Icon, title, body }, i) => (
-              <li key={title} className="relative rounded-2xl border border-ink-700 bg-ink-850 p-5 shadow-card sm:p-6">
+              <li key={title} className="rounded-2xl border border-ink-700 bg-ink-850 p-5 shadow-card sm:p-6">
                 <div className="flex items-center justify-between">
                   <span
                     className="flex size-9 items-center justify-center rounded-full border border-gold-500/50 bg-gold-500/10 font-display text-lg text-gold-300"
@@ -240,7 +240,7 @@ export default function DrivePage() {
             />
 
             <div className="mt-8 rounded-2xl border border-ink-700 bg-ink-850 p-5">
-              <Eyebrow className="text-ink-400">Not collected at this stage</Eyebrow>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-ink-400">Not collected at this stage</p>
               <ul className="mt-3 space-y-2 text-sm text-ink-300">
                 {NOT_COLLECTED.map((item) => (
                   <li key={item} className="flex items-center gap-2.5">
