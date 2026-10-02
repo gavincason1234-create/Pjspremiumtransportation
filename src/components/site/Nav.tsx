@@ -33,7 +33,7 @@ export function Nav() {
       <div className="container-x flex h-16 items-center justify-between gap-4 sm:h-[72px]">
         <Logo />
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Primary">
           {NAV_LINKS.map((l) => {
             const active = pathname === l.href || pathname.startsWith(l.href + "/");
             return (
@@ -41,7 +41,7 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "rounded-full px-3.5 py-2 text-sm font-medium text-ink-300 transition-colors hover:bg-white/5 hover:text-cream-50",
+                  "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-ink-300 transition-colors hover:bg-white/5 hover:text-cream-50 xl:px-3.5",
                   active && "text-cream-50",
                 )}
                 aria-current={active ? "page" : undefined}
@@ -53,9 +53,13 @@ export function Nav() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <a href={BUSINESS.phoneHref} className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold text-cream-100 hover:bg-white/5">
+          <a
+            href={BUSINESS.phoneHref}
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold text-cream-100 hover:bg-white/5 xl:px-3.5"
+            aria-label={`Call ${BUSINESS.phone}`}
+          >
             <Phone className="size-4 text-gold-400" aria-hidden="true" />
-            {BUSINESS.phone}
+            <span className="hidden xl:inline">{BUSINESS.phone}</span>
           </a>
           <ButtonLink href="/book" size="sm">
             Get a quote

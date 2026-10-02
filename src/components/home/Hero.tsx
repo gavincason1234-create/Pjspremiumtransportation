@@ -11,23 +11,31 @@ import { AVAILABILITY } from "@/lib/types";
 export function Hero({ settings, stats }: { settings: SiteSettings; stats: ReviewStats }) {
   return (
     <section className="relative overflow-hidden border-b border-white/5" aria-labelledby="hero-title">
-      {/* Background: the owner's own cover artwork, kept subtle so the type stays crisp */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <Image
-          src="/brand/cover.jpg"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center opacity-[0.16] blur-[2px] scale-105"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-950/85 to-ink-950" />
+      {/* Background: the PJ's logo itself, large and luminous behind the headline.
+          Phones/tablets: centered and dimmed so the text stays readable.
+          Desktop: anchored to the right and fading into the page under the copy. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute left-1/2 top-4 aspect-square w-[125vw] max-w-[640px] -translate-x-1/2 opacity-[0.28] sm:top-8 sm:w-[90vw] sm:opacity-30 xl:left-auto xl:right-[calc(max(0px,(100vw-76rem)/2)-1.5rem)] xl:top-1/2 xl:w-[min(48vw,720px)] xl:max-w-none xl:translate-x-0 xl:-translate-y-1/2 xl:opacity-100">
+          <div className="absolute inset-[6%] rounded-full bg-gold-500/25 blur-3xl" />
+          <Image
+            src="/brand/profile.jpg"
+            alt=""
+            fill
+            sizes="(min-width: 1280px) 50vw, (min-width: 640px) 90vw, 125vw"
+            className="rounded-full object-cover shadow-glow"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </div>
+        {/* Readability veils */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-950/20 via-ink-950/75 to-ink-950 xl:hidden" />
+        <div className="absolute inset-0 hidden xl:block bg-[linear-gradient(90deg,var(--color-ink-950)_0%,var(--color-ink-950)_38%,rgba(8,8,10,0.75)_52%,rgba(8,8,10,0)_70%)]" />
+        <div className="absolute inset-x-0 bottom-0 hidden h-40 bg-gradient-to-t from-ink-950 to-transparent xl:block" />
         <div className="absolute inset-0 bg-hero-glow" />
       </div>
 
-      <div className="container-x relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:py-28">
-        <div className="lg:col-span-7">
+      <div className="container-x relative grid items-center gap-12 pb-16 pt-40 sm:pb-20 sm:pt-56 xl:min-h-[760px] xl:grid-cols-12 xl:py-28">
+        <div className="xl:col-span-7">
           <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gold-400 sm:text-xs">
             Myra, Texas · Reservations only · Woman-owned
           </p>
@@ -79,21 +87,6 @@ export function Hero({ settings, stats }: { settings: SiteSettings; stats: Revie
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
-          <div className="relative mx-auto aspect-square w-64 sm:w-80 lg:w-[22rem]">
-            <div className="absolute inset-0 rounded-full bg-gold-500/20 blur-3xl" aria-hidden="true" />
-            <Image
-              src="/brand/profile.jpg"
-              alt="PJ's Premium Transportation logo: a black Cadillac SUV in a gold ring"
-              fill
-              sizes="(min-width: 1024px) 352px, 320px"
-              className="rounded-full object-cover ring-2 ring-gold-500/60 shadow-glow"
-              loading="eager"
-              fetchPriority="high"
-            />
-          </div>
-          <p className="mt-6 text-center font-display text-lg text-cream-200">{BUSINESS.promise}</p>
-        </div>
       </div>
     </section>
   );
