@@ -3,6 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { WhyPJs } from "@/components/home/WhyPJs";
+import { VsRideshare } from "@/components/home/VsRideshare";
 import { Gallery } from "@/components/home/Gallery";
 import { DriverStandard } from "@/components/home/DriverStandard";
 import { MeetTheDriver } from "@/components/home/MeetTheDriver";
@@ -54,6 +55,7 @@ export default async function HomePage() {
       <TrustStrip />
       <ServicesGrid compact />
       <WhyPJs />
+      <VsRideshare />
       <Gallery images={images} />
       <DriverStandard />
       <MeetTheDriver photo={patsy} />
